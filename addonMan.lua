@@ -89,18 +89,19 @@ f:SetScript('OnShow', function()
 
     f.rows = (function()
         local check_onclick = function(self)
+            local checked = self:GetChecked()
             local addon = self:GetParent().addon
-            local enable = self:GetChecked()
-            if(enabled) then
-                --EnableAddOn(addon)
+            if(checked) then
+                EnableAddOn(addon)
             else
-                --DisableAddOn(addon)
+                DisableAddOn(addon)
             end
             f.refresh()
         end
 
         local load_onclick = function(self)
             local addon = self:GetParent().addon
+            EnableAddOn(addon)
             LoadAddOn(addon)
             f.refresh()
         end
@@ -149,12 +150,12 @@ f:SetScript('OnShow', function()
             reason:SetTextColor(1, 0, 0)
             row.reason = reason
 
-            local loadbtn = CreateFrame('Button', nil, row, 'OptionsButtonTemplate')
-            loadbtn:SetSize(60, 22)
-            loadbtn:SetPoint'RIGHT'
-            loadbtn:SetText'Load'
-            loadbtn:SetScript('OnLoad', load_onclick)
-            row.load = loadbtn
+            local load = CreateFrame('Button', nil, row, 'OptionsButtonTemplate')
+            load:SetSize(60, 22)
+            load:SetPoint'RIGHT'
+            load:SetText'Load'
+            load:SetScript('OnClick', load_onclick)
+            row.load = load
         end
 
         return rows
@@ -174,12 +175,15 @@ f:SetScript('OnShow', function()
                 row.check:SetChecked(info.enabled)
                 row.title:SetText(info.name)
                 row.mem:SetText(info.loaded and info.mem)
-                row.reason:SetText(info.reason)
-                if(info.loaded or info.reason) then
+
+                local reason = info.reason
+                row.reason:SetText(reason)
+                if(info.loaded or reason) then
                     row.load:Hide()
                 else
                     row.load:Show()
                 end
+
                 row:Show()
             else
                 row:Hide()
