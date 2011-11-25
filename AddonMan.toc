@@ -1,0 +1,6 @@
+## Interface: 40200
+## Title: AddonMan
+## Notes: Simple addon manager
+
+addonMan.lua
+
