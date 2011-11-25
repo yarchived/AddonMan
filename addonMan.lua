@@ -210,6 +210,15 @@ f:SetScript('OnShow', function()
             f.refresh()
         end)
 
+        scrollbar:SetBackdrop{
+            edgeFile = 'Interface\\Tooltips\\UI-Tooltip-Border',
+            tile = true,
+            tileSize = 16,
+            edgeSize = 12,
+            insets = { left = 0, right = 0, top = 5, bottom = 5 }
+        }
+        scrollbar:SetBackdropColor(1, 1, 1)
+
         return scrollbar
     end)()
 
