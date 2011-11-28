@@ -194,10 +194,10 @@ f:SetScript('OnShow', function()
 
     f.scroll = (function()
         local scrollbar = CreateFrame('Slider', nil, f)
-        scrollbar:SetWidth(16)
+        scrollbar:SetWidth(20)
         scrollbar:SetPoint('TOP', f.rows[1])
         scrollbar:SetPoint('BOTTOM', f.rows[#f.rows])
-        scrollbar:SetPoint('RIGHT', -16, 0)
+        scrollbar:SetPoint('RIGHT', -12, 0)
 
         scrollbar:SetThumbTexture'Interface\\Buttons\\UI-ScrollBar-Knob'
 
@@ -215,7 +215,7 @@ f:SetScript('OnShow', function()
             tile = true,
             tileSize = 16,
             edgeSize = 12,
-            insets = { left = 0, right = 0, top = 5, bottom = 5 }
+            insets = { left = 5, right = 5, top = 5, bottom = 5 }
         }
         scrollbar:SetBackdropColor(1, 1, 1)
 
