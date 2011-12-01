@@ -260,6 +260,5 @@ local dataobj = LibStub:GetLibrary('LibDataBroker-1.1'):NewDataObject('AddonMan'
 	OnClick = function() InterfaceOptionsFrame_OpenToCategory(f) end,
 })
 
-SLASH_RELOAD1 = '/rl'
-SlashCmdList.RELOAD = ReloadUI
+SLASH_RELOAD3 = '/rl'
 
