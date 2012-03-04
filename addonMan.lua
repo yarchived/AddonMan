@@ -252,13 +252,47 @@ f:SetScript('OnShow', function()
         f.scroll:SetValue(f.scroll:GetValue() - val*#f.rows/2)
     end)
 
+    local lastrow = f.rows[#f.rows]
+
+    local for_all_do = function(action)
+        for _, addon in next, showlist do
+            action(addon)
+        end
+    end
+
+    local enall = CreateFrame('Button', nil, f, 'OptionsButtonTemplate')
+    enall:SetSize(100, 22)
+    enall:SetPoint('TOPLEFT', lastrow, 'BOTTOMLEFT', 5, -15)
+    enall:SetText'Enable All'
+    enall:SetScript('OnClick', function()
+        for_all_do(EnableAddOn)
+        f.refresh()
+    end)
+    f.enall = enall
+
+    local disall = CreateFrame('Button', nil, f, 'OptionsButtonTemplate')
+    disall:SetSize(100, 22)
+    disall:SetPoint('LEFT', enall, 'RIGHT', 5, 0)
+    disall:SetText'Disable All'
+    disall:SetScript('OnClick', function()
+        for_all_do(DisableAddOn)
+        f.refresh()
+    end)
+    f.disall = disall
 end)
 
-local dataobj = LibStub:GetLibrary('LibDataBroker-1.1'):NewDataObject('AddonMan', {
+local opencfg = function() InterfaceOptionsFrame_OpenToCategory(f) end
+
+local LDB = LibStub and LibStub:GetLibrary('LibDataBroker-1.1', true)
+local dataobj = LDB and LDB:NewDataObject('AddonMan', {
 	type = 'launcher',
-	icon = 'Interface\\Icons\\Spell_Nature_NatureBlessing',
-	OnClick = function() InterfaceOptionsFrame_OpenToCategory(f) end,
+	icon = [[Interface\Icons\Spell_Nature_NatureBlessing]],
+	OnClick = opencfg,
 })
 
-SLASH_RELOAD3 = '/rl'
+SLASH_ADDONMANRL1 = '/rl'
+SlashCmdList.ADDONMANRL = function() return ReloadUI() end
+
+SLASH_ADDONMAN1 = '/addonman'
+SlashCmdList.ADDONMAN = opencfg
 
