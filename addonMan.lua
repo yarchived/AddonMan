@@ -227,16 +227,24 @@ f:SetScript('OnShow', function()
     search:SetAutoFocus(false)
     search:SetScript('OnTextChanged', function(self)
         local str = self:GetText()
+        wipe(showlist)
         if(str == '') then
-            wipe(showlist)
-            for k, v in ipairs(addons) do
-                showlist[k] = v
+            for i, name in ipairs(addons) do
+                showlist[i] = name
+            end
+        elseif(str == 'enabled' or str == 'disabled') then
+            for i, name in ipairs(addons) do
+                local cfg = proxy[name]
+                local enabled = cfg.enabled
+                if(enabled and str == 'enabled') or
+                    (not enabled and str == 'disabled') then
+                    tinsert(showlist, name)
+                end
             end
         else
-            wipe(showlist)
-            for k, v in ipairs(addons) do
-                if(v:lower():find(str)) then
-                    tinsert(showlist, v)
+            for i, name in ipairs(addons) do
+                if(name:lower():find(str)) then
+                    tinsert(showlist, name)
                 end
             end
         end
